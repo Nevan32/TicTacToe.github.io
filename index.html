@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TicTacToe</title>
     <style>
-        /* Gaya sebelumnya tetap sama */
         body {
             background-color: #000000;
             color: white;
@@ -74,6 +73,10 @@
     </div>
 
     <script>
+        // Link untuk setiap mode
+        const singlePlayerLink = "https://nevan32.github.io/SinglePlayerTicTacTou.github.io/";
+        const multiPlayerLink = "https://nevan32.github.io/MultiPlayerTicTacTou.github.io/";
+
         // Elemen
         const container = document.getElementById('container');
         const title = document.getElementById('title');
@@ -100,7 +103,7 @@
             if (mode === 'single') {
                 title.textContent = "Single Player";
                 confirmationText.textContent = 
-                    "Mode Ini Anda Akan Bermain Dengan Ai atau Bot Yang Secara Otomatis Akan Melawan Anda, Anda Dapat Memilih Tingkat Kesulitannya, Dan anda dapat memilih board 3x3 atau 4x4";
+                    "Mode Ini Anda Akan Bermain Dengan AI atau Bot Yang Secara Otomatis Akan Melawan Anda, Anda Dapat Memilih Tingkat Kesulitannya, Dan Anda Dapat Memilih Board 3x3 atau 4x4";
             } else if (mode === 'multi') {
                 title.textContent = "Multiplayer";
                 confirmationText.textContent = 
@@ -124,24 +127,20 @@
         // Fungsi untuk memulai game
         startBtn.addEventListener('click', () => {
             // Hapus semua elemen dari layar
-            confirmation.classList.add('hidden');
-            selectedMode.classList.remove('hidden');
-            title.classList.add('hidden');
-            backBtn.classList.add('hidden');
-            if (chosenMode === 'single') {
-                loadScript('singlePlayer.js'); // Panggil file Single Player
-            } else if (chosenMode === 'multi') {
-                loadScript('multiPlayer.js'); // Panggil file Multiplayer
-            }
-        });
+            container.innerHTML = ""; 
+            const message = document.createElement('div');
+            message.innerHTML = `
+                <h1>${chosenMode === 'single' ? 'Single Player' : 'Multiplayer'}</h1>
+                <p>Mode Telah Dipilih, Mohon Tunggu...</p>
+            `;
+            container.appendChild(message);
 
-        // Fungsi untuk memuat file JavaScript eksternal
-        function loadScript(scriptPath) {
-            const script = document.createElement('script');
-            script.src = scriptPath;
-            script.onload = () => console.log(`${scriptPath} loaded`);
-            document.body.appendChild(script);
-        }
+            // Tunggu 2 detik lalu arahkan ke link yang sesuai
+            setTimeout(() => {
+                const link = chosenMode === 'single' ? singlePlayerLink : multiPlayerLink;
+                window.location.href = link;
+            }, 2000);
+        });
     </script>
 </body>
 </html>
